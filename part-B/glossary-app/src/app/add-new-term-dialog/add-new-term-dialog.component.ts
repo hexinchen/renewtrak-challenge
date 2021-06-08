@@ -1,8 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { TermDialogActions } from '../glossary-table/glossary-table.component';
 import { GlossaryTerm } from '../glossary.model';
 
@@ -66,6 +64,10 @@ export class AddNewTermDialogComponent implements OnInit {
     const isWhitespace = (control.value || '').trim().length === 0;
     const isValid = !isWhitespace;
     return isValid ? null : { 'whitespace': true };
+  }
+
+  onCancel(): void {
+    this.dialogRef.close();
   }
 
 

@@ -52,7 +52,13 @@ export class GlossaryTableComponent implements OnInit {
       takeUntil(this.unsubscribe)
     ).subscribe(result => {
       if (result !== undefined) {
-
+        const targetTermIndex: number = this.dataSource.data.findIndex(term => term.id === selectedTerm.id);
+        this.dataSource.data[targetTermIndex] = { ...result.newTerm, id: selectedTerm.id };
+        this.dataSource.data = this.dataSource.data.sort(this.alphebeticalComparator);
+        localStorage.setItem("terms", JSON.stringify(this.dataSource.data));
+        this.snackBar.open("This term has been successfully updated!", "OK", {
+          duration: 3000
+        });
       }
     })
   }

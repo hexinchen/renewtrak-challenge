@@ -26,7 +26,7 @@
     </form>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button (click)="onCancel()">Cancel</button>
     <button mat-button [disabled]="termForm.invalid" cdkFocusInitial (click)="submit()">Add</button>
   </mat-dialog-actions>
 </div>
