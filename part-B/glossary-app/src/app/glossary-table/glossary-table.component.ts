@@ -7,6 +7,7 @@ import { take, takeUntil } from 'rxjs/operators';
 import { AddNewTermDialogComponent } from '../add-new-term-dialog/add-new-term-dialog.component';
 import { glossaryData } from '../glossary-data';
 import { GlossaryTerm } from '../glossary.model';
+import { WarningPopUpComponent } from '../warning-pop-up/warning-pop-up.component';
 
 export enum TermDialogActions {
   Edit = 'EDIT',
@@ -18,7 +19,7 @@ export enum TermDialogActions {
   templateUrl: './glossary-table.component.html',
   styleUrls: ['./glossary-table.component.scss']
 })
-export class GlossaryTableComponent implements OnInit {
+export class GlossaryTableComponent {
   displayedColumns: string[] = ['id', 'term', 'definition', 'edit', 'delete'];
   dataSource: MatTableDataSource<GlossaryTerm>;
   unsubscribe = new Subject()
@@ -32,8 +33,9 @@ export class GlossaryTableComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
-
+  reRenderTable(): void {
+    this.dataSource.data = this.dataSource.data.sort(this.alphebeticalComparator);
+    localStorage.setItem("terms", JSON.stringify(this.dataSource.data));
   }
 
   alphebeticalComparator(a: GlossaryTerm, b: GlossaryTerm): number {
@@ -54,8 +56,7 @@ export class GlossaryTableComponent implements OnInit {
       if (result !== undefined) {
         const targetTermIndex: number = this.dataSource.data.findIndex(term => term.id === selectedTerm.id);
         this.dataSource.data[targetTermIndex] = { ...result.newTerm, id: selectedTerm.id };
-        this.dataSource.data = this.dataSource.data.sort(this.alphebeticalComparator);
-        localStorage.setItem("terms", JSON.stringify(this.dataSource.data));
+        this.reRenderTable();
         this.snackBar.open("This term has been successfully updated!", "OK", {
           duration: 3000
         });
@@ -79,9 +80,34 @@ export class GlossaryTableComponent implements OnInit {
           ...result.newTerm,
           id: this.dataSource.data.length,
         };
-        this.dataSource.data = [...this.dataSource.data, newTerm].sort(this.alphebeticalComparator);
-        localStorage.setItem("terms", JSON.stringify(this.dataSource.data));
+        this.dataSource.data = [...this.dataSource.data, newTerm];
+        this.reRenderTable();
         this.snackBar.open("The new term has been successfully added!", "OK", {
+          duration: 3000
+        });
+      }
+
+    });
+  }
+
+  deleteTerm(selectedTerm: GlossaryTerm): void {
+    const dialogRef = this.dialog.open(WarningPopUpComponent, {
+      data: {
+        glossaryTerm: selectedTerm
+      }
+    });
+
+    dialogRef.afterClosed().pipe(
+      takeUntil(this.unsubscribe)
+    ).subscribe(result => {
+      if (result !== undefined && result.confirmed) {
+        const targetTermIndex: number = this.dataSource.data.findIndex(term => term.id === selectedTerm.id);
+        this.dataSource.data = [
+          ...this.dataSource.data.slice(0, targetTermIndex),
+          ...this.dataSource.data.slice(targetTermIndex + 1)
+        ];
+        this.reRenderTable();
+        this.snackBar.open("The new term has been successfully deleted!", "OK", {
           duration: 3000
         });
       }

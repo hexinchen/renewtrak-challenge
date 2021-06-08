@@ -15,6 +15,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { WarningPopUpComponent } from './warning-pop-up/warning-pop-up.component';
+import { FlexLayoutModule } from "@angular/flex-layout";
 
 
 
@@ -25,7 +27,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     AppComponent,
     GlossaryTableComponent,
     GlossaryPageComponent,
-    AddNewTermDialogComponent
+    AddNewTermDialogComponent,
+    WarningPopUpComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatFormFieldModule,
     ReactiveFormsModule,
     MatInputModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

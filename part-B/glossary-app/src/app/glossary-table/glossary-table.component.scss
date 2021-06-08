@@ -12,11 +12,13 @@ table {
   background-color: white;
   font-size: 14px;
   cursor: pointer;
+  max-width: 200px;
 }
 
 .add-new-btn .mat-icon{
   color: $prime-text-color;
   transform: scale(0.8);
+
 }
 
 .mat-header-cell.cdk-header-cell {
@@ -48,3 +50,8 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell{
 .delete-icon{
   color: $destructive-action-color;
 }
+
+.empty-msg{
+  padding-top: 48px
+}
+

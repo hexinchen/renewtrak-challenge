@@ -29,11 +29,14 @@
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef> Delete </th>
       <td mat-cell *matCellDef="let element">
-        <mat-icon class="delete-icon">delete</mat-icon>
+        <mat-icon class="delete-icon" (click)="deleteTerm(element)">delete</mat-icon>
       </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+  <div fxLayout="row" fxLayoutAlign="center center"><span *ngIf="dataSource.data.length === 0" class="empty-msg">There
+      is no
+      data. Please add some new terms.</span></div>
 </div>

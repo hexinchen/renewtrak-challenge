@@ -1,0 +1,26 @@
+@import '../../styles.scss';
+
+*{
+  font-family: 'Montserrat', sans-serif;
+}
+
+.delete-button{
+  background-color: $destructive-action-color;
+  color: white;
+}
+
+h2, h3{
+  text-align: center;
+}
+
+.term-summary{
+  margin: 24px;
+}
+
+.title{
+  font-weight: bold;
+}
+
+.title, .content{
+  margin-bottom: 12px;
+}

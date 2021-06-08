@@ -1,0 +1,21 @@
+<div class="container" fxLayout="column" fxLayoutAlign="start center">
+  <h2 mat-dialog-title>Confirm deletion</h2>
+  <mat-dialog-content class="mat-typography">
+    <h3>Are you sure you want to delete this term?</h3>
+    <div class="term-summary" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
+      <div>
+        <div class="title">Term</div>
+        <div class="content">{{data.glossaryTerm.term}}</div>
+      </div>
+      <div>
+        <div class="title">Definition</div>
+        <div class="content">{{data.glossaryTerm.definition}}</div>
+      </div>
+
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-button cdkFocusInitial class="delete-button" (click)="submit()">Delete</button>
+  </mat-dialog-actions>
+</div>
