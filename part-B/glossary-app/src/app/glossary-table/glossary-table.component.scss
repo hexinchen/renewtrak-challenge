@@ -1,0 +1,50 @@
+@import '../../styles.scss';
+
+table {
+  width: 100%;
+  tr, td, th{
+    font-family: 'Montserrat';
+  }
+}
+
+.add-new-btn{
+  border: 2px solid $prime-text-color;
+  background-color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.add-new-btn .mat-icon{
+  color: $prime-text-color;
+  transform: scale(0.8);
+}
+
+.mat-header-cell.cdk-header-cell {
+  text-align: left;
+  margin-right: 24px !important;
+  padding-right: 24px !important;
+}
+
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell{
+  padding: 8px 8px;
+}
+
+.definition-column{
+  width: 300px;
+}
+
+.definition-table-cell{
+  font-size: 14px;
+}
+
+.mat-icon{
+  cursor: pointer;
+}
+
+.edit-icon{
+  color: $primary-action-color;
+}
+
+.delete-icon{
+  color: $destructive-action-color;
+}

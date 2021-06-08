@@ -1,0 +1,32 @@
+<div class="container" fxLayout="column" fxLayoutAlign="start center">
+  <h2 mat-dialog-title>{{data.action === ActionEnum.Add ? 'Add A New Term' : 'Edit term'}}</h2>
+  <mat-dialog-content class="mat-typography">
+    <form [formGroup]="termForm">
+      <div fxLayout="column" fxLayoutAlign="start center">
+        <mat-form-field appearance="fill">
+          <mat-label>Term</mat-label>
+          <input matInput formControlName="term">
+          <mat-error *ngIf="termForm.get('term')?.hasError('required') || termForm.get('term')?.value.length === 0">
+            Term is required.
+          </mat-error>
+          <mat-error *ngIf="termForm.get('term')?.hasError('whitespace')">Cannot be white space.</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Definition</mat-label>
+          <textarea matInput formControlName="definition"></textarea>
+          <mat-hint align="end">{{termForm.get('definition')?.value?.length || 0}}/256</mat-hint>
+
+          <mat-error *ngIf="termForm.get('definition')?.hasError('required')">Definition is required.</mat-error>
+          <mat-error *ngIf="termForm.get('definition')?.hasError('whitespace')">Cannot be white space.</mat-error>
+          <mat-error *ngIf="termForm.get('definition')?.hasError('maxLength')">The maximum character number is 256.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [disabled]="termForm.invalid" cdkFocusInitial (click)="submit()">Add</button>
+  </mat-dialog-actions>
+</div>
