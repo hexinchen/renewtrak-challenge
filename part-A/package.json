@@ -1,0 +1,22 @@
+{
+  "name": "part-a",
+  "version": "1.0.0",
+  "description": "",
+  "main": "linked-list.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.jsx?$"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "@std/esm": "cjs",
+  "dependencies": {
+    "@std/esm": "^0.26.0"
+  },
+  "devDependencies": {
+    "jest": "^27.0.4"
+  }
+}

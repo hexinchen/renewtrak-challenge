@@ -92,14 +92,16 @@ class LinkedList {
     }
 }
 
-function main() {
+function return5thFromLinkedList(array) {
     let linkedList = new LinkedList();
-    linkedList.createFromArray([1, 2, 3, 4, 5, 6]);
+    linkedList.createFromArray(array);
     linkedList.print();
     console.log("The last 5th is :", linkedList.get5th());
+    return linkedList.get5th();
 }
 
-main();
+return5thFromLinkedList([1, 2, 3, 4, 5, 6]);
 
+module.exports = return5thFromLinkedList;
 
 

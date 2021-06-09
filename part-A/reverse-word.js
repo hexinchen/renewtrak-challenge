@@ -34,6 +34,7 @@ function reverseWords(target) {
         return result;
     } catch (e) {
         console.log("Error: ", e);
+        return "ERROR";
     }
 
 
@@ -43,3 +44,4 @@ function reverseWords(target) {
 let str = "cat and dog";
 console.log("Before: ", str);
 console.log("After: ", reverseWords(str));
+module.exports = reverseWords;
