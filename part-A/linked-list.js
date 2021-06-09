@@ -47,6 +47,34 @@ class LinkedList {
 
     }
 
+    get5th() {
+        let indexMap = new Map();
+        try {
+            if (!this.head) {
+                throw new Error('Linked list is empty!');
+            }
+            if (!this.head.next) {
+                throw new Error('There is only one node in this list.');
+            }
+            let currentNode = this.head;
+            indexMap.set(0, currentNode.data);
+            let size = 1;
+            while (currentNode.next) {
+                currentNode = currentNode.next;
+                indexMap.set(size, currentNode.data);
+                size += 1;
+            }
+            if (size < 5) {
+                throw new Error('The size of linked list should be at least 5.');
+            } else {
+                return indexMap.get(size - 5);
+            }
+        } catch (e) {
+            console.log("Error: ", e);
+            return -1;
+        }
+    }
+
     createFromArray(array) {
         if (!array || array.length === 0) {
             return;
@@ -66,9 +94,9 @@ class LinkedList {
 
 function main() {
     let linkedList = new LinkedList();
-    linkedList.createFromArray([1, 2, 3, 4, 5]);
-    console.log("size is :", linkedList.getSize());
+    linkedList.createFromArray([1, 2, 3, 4, 5, 6]);
     linkedList.print();
+    console.log("The last 5th is :", linkedList.get5th());
 }
 
 main();
