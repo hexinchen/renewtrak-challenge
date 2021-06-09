@@ -1,0 +1,21 @@
+<div class="container">
+  <mat-card class="example-card">
+    <mat-card-header class="mobile-term-card-header">
+      <mat-card-title>{{term.term}}</mat-card-title>
+      <mat-card-subtitle>ID: {{term.id}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        {{term.definition}}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button class="edit-btn">Edit
+        <mat-icon class="edit-icon" (click)="editTerm()">edit</mat-icon>
+      </button>
+      <button mat-button class="delete-btn">Delete
+        <mat-icon class="delete-icon" (click)="deleteTerm()">delete</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

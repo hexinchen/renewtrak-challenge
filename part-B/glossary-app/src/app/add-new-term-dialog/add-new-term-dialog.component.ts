@@ -68,8 +68,20 @@ export class AddNewTermDialogComponent implements OnInit {
   }
 
   letterOnlyValidator(control: FormControl): ValidationErrors | null {
-    const isValid: boolean = control.value?.match('/^[A-Za-z]+$/');
-    return isValid ? null : { 'lettersOnly': true };
+    if (control.value) {
+      const words: string[] = control.value?.split(' ');
+      let isValid: boolean = true;
+      words.forEach(w => {
+        if (!w.match(/^[A-Za-z]+$/)) {
+          isValid = false;
+        }
+      })
+      return isValid ? null : {
+        'lettersOnly': true
+      };
+    }
+    return null;
+
   }
 
   onCancel(): void {

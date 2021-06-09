@@ -17,6 +17,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { WarningPopUpComponent } from './warning-pop-up/warning-pop-up.component';
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { MobileTermCardComponent } from './mobile-term-card/mobile-term-card.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
+
 
 
 
@@ -28,7 +33,8 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     GlossaryTableComponent,
     GlossaryPageComponent,
     AddNewTermDialogComponent,
-    WarningPopUpComponent
+    WarningPopUpComponent,
+    MobileTermCardComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +48,9 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     ReactiveFormsModule,
     MatInputModule,
     MatSnackBarModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatCardModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

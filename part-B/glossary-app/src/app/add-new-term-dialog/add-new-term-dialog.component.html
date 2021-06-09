@@ -14,7 +14,7 @@
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Definition</mat-label>
-          <textarea matInput formControlName="definition"></textarea>
+          <textarea matInput formControlName="definition" class="definition-text-area"></textarea>
           <mat-hint align="end">{{termForm.get('definition')?.value?.length || 0}}/256</mat-hint>
 
           <mat-error *ngIf="termForm.get('definition')?.hasError('required')">Definition is required.</mat-error>
@@ -27,7 +27,8 @@
     </form>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button mat-button (click)="onCancel()">Cancel</button>
-    <button mat-button [disabled]="termForm.invalid" cdkFocusInitial (click)="submit()">Add</button>
+    <button mat-button class="cancel-btn" (click)="onCancel()">Cancel</button>
+    <button mat-button class="add-btn" [disabled]="termForm.invalid" cdkFocusInitial (click)="submit()">{{data.action
+      === ActionEnum.Add ? 'Add' : 'Update'}}</button>
   </mat-dialog-actions>
 </div>

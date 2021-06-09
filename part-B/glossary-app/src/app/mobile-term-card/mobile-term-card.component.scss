@@ -1,0 +1,20 @@
+@import '../../styles.scss';
+
+
+
+.mat-card-header-text {
+  margin: 0 0px !important;
+}
+
+
+.edit-btn, .delete-btn{
+  border: 2px solid $prime-text-color;
+}
+
+.edit-icon{
+  color: $primary-action-color;
+}
+
+.delete-icon{
+  color: $destructive-action-color;
+}

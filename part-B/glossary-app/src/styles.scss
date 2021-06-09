@@ -1,15 +1,38 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap');
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~@angular/flex-layout/mq';
+
+
 $prime-text-color: rgba(28, 145, 153, 0.8);
 $primary-action-color: rgb(63, 127, 191);
 $destructive-action-color: rgb(191, 63, 63);
+
+
 html, body { height: 100%; }
 body {
   margin: 0;
-  font-family: 'Montserrat', sans-serif;
   padding: 24px 32px;
   background-color: rgba(153, 204, 255, 0.5);
+}
+
+*{
+  font-family: 'Montserrat', sans-serif;
+
+}
+
+.mat-icon{
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+}
+
+.mobile-term-card-header{
+  div.mat-card-header-text{
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
 }
 
 

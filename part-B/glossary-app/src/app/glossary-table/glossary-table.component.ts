@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subject } from 'rxjs';
@@ -20,22 +21,27 @@ export enum TermDialogActions {
   styleUrls: ['./glossary-table.component.scss']
 })
 export class GlossaryTableComponent {
-  displayedColumns: string[] = ['id', 'term', 'definition', 'edit', 'delete'];
-  dataSource: MatTableDataSource<GlossaryTerm>;
-  unsubscribe = new Subject()
+  public readonly PAGE_SIZE = 10;
+  public displayedColumns: string[] = ['id', 'term', 'definition', 'edit', 'delete'];
+  public dataSource: MatTableDataSource<GlossaryTerm>;
+  private unsubscribe = new Subject();
+  public allTerms: GlossaryTerm[] = [];
+
   constructor(public dialog: MatDialog, private snackBar: MatSnackBar) {
     const localTerms = localStorage.getItem("terms");
     if (!localTerms) {
-      this.dataSource = new MatTableDataSource(glossaryData.sort(this.alphebeticalComparator));
+      this.allTerms = glossaryData.sort(this.alphebeticalComparator);
+
     } else {
-      this.dataSource = new MatTableDataSource(JSON.parse(localTerms).sort(this.alphebeticalComparator))
+      this.allTerms = JSON.parse(localTerms).sort(this.alphebeticalComparator);
     }
+    this.dataSource = new MatTableDataSource(this.allTerms.slice(0, this.PAGE_SIZE));
 
   }
 
   reRenderTable(): void {
-    this.dataSource.data = this.dataSource.data.sort(this.alphebeticalComparator);
-    localStorage.setItem("terms", JSON.stringify(this.dataSource.data));
+    this.allTerms = this.allTerms.sort(this.alphebeticalComparator);
+    localStorage.setItem("terms", JSON.stringify(this.allTerms));
   }
 
   alphebeticalComparator(a: GlossaryTerm, b: GlossaryTerm): number {
@@ -54,8 +60,8 @@ export class GlossaryTableComponent {
       takeUntil(this.unsubscribe)
     ).subscribe(result => {
       if (result !== undefined) {
-        const targetTermIndex: number = this.dataSource.data.findIndex(term => term.id === selectedTerm.id);
-        this.dataSource.data[targetTermIndex] = { ...result.newTerm, id: selectedTerm.id };
+        const targetTermIndex: number = this.allTerms.findIndex(term => term.id === selectedTerm.id);
+        this.allTerms[targetTermIndex] = { ...result.newTerm, id: selectedTerm.id };
         this.reRenderTable();
         this.snackBar.open("This term has been successfully updated!", "OK", {
           duration: 3000
@@ -78,9 +84,9 @@ export class GlossaryTableComponent {
       if (result !== undefined) {
         const newTerm: GlossaryTerm = {
           ...result.newTerm,
-          id: this.dataSource.data.length,
+          id: this.allTerms.length,
         };
-        this.dataSource.data = [...this.dataSource.data, newTerm];
+        this.allTerms = [...this.allTerms, newTerm];
         this.reRenderTable();
         this.snackBar.open("The new term has been successfully added!", "OK", {
           duration: 3000
@@ -101,10 +107,10 @@ export class GlossaryTableComponent {
       takeUntil(this.unsubscribe)
     ).subscribe(result => {
       if (result !== undefined && result.confirmed) {
-        const targetTermIndex: number = this.dataSource.data.findIndex(term => term.id === selectedTerm.id);
-        this.dataSource.data = [
-          ...this.dataSource.data.slice(0, targetTermIndex),
-          ...this.dataSource.data.slice(targetTermIndex + 1)
+        const targetTermIndex: number = this.allTerms.findIndex(term => term.id === selectedTerm.id);
+        this.allTerms = [
+          ...this.allTerms.slice(0, targetTermIndex),
+          ...this.allTerms.slice(targetTermIndex + 1)
         ];
         this.reRenderTable();
         this.snackBar.open("The new term has been successfully deleted!", "OK", {
@@ -118,6 +124,11 @@ export class GlossaryTableComponent {
   ngOnDestroy() {
     this.unsubscribe.next()
     this.unsubscribe.complete()
+  }
+
+  changePage(event: PageEvent): void {
+    this.dataSource.data = this.allTerms.slice(event.pageIndex * this.PAGE_SIZE, event.pageIndex * this.PAGE_SIZE + this.PAGE_SIZE);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
 }
