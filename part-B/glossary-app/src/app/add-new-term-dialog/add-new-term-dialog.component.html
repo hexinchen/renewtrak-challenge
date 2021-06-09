@@ -10,6 +10,7 @@
             Term is required.
           </mat-error>
           <mat-error *ngIf="termForm.get('term')?.hasError('whitespace')">Cannot be white space.</mat-error>
+          <mat-error *ngIf="termForm.get('term')?.hasError('lettersOnly')">Only letters are allowed.</mat-error>
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Definition</mat-label>

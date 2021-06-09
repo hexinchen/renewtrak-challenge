@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ControlContainer, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TermDialogActions } from '../glossary-table/glossary-table.component';
 import { GlossaryTerm } from '../glossary.model';
@@ -22,7 +22,8 @@ export class AddNewTermDialogComponent implements OnInit {
     this.termForm = this.fb.group({
       term: [null, [
         Validators.required,
-        this.noWhitespaceValidator
+        this.noWhitespaceValidator,
+        this.letterOnlyValidator
       ]],
       definition: [null, [
         Validators.required,
@@ -60,10 +61,15 @@ export class AddNewTermDialogComponent implements OnInit {
 
   }
 
-  noWhitespaceValidator(control: FormControl) {
-    const isWhitespace = (control.value || '').trim().length === 0;
-    const isValid = !isWhitespace;
+  noWhitespaceValidator(control: FormControl): ValidationErrors | null {
+    const isWhitespace: boolean = (control.value || '').trim().length === 0;
+    const isValid: boolean = !isWhitespace;
     return isValid ? null : { 'whitespace': true };
+  }
+
+  letterOnlyValidator(control: FormControl): ValidationErrors | null {
+    const isValid: boolean = control.value?.match('/^[A-Za-z]+$/');
+    return isValid ? null : { 'lettersOnly': true };
   }
 
   onCancel(): void {
