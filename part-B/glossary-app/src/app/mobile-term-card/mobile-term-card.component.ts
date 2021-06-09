@@ -6,14 +6,11 @@ import { GlossaryTerm } from '../glossary.model';
   templateUrl: './mobile-term-card.component.html',
   styleUrls: ['./mobile-term-card.component.scss']
 })
-export class MobileTermCardComponent implements OnInit {
+export class MobileTermCardComponent {
   @Input() term!: GlossaryTerm;
   @Output() deleteButtonClicked: EventEmitter<GlossaryTerm> = new EventEmitter();
   @Output() editButtonClicked: EventEmitter<GlossaryTerm> = new EventEmitter();
   constructor() {
-  }
-
-  ngOnInit(): void {
   }
 
   deleteTerm(): void {

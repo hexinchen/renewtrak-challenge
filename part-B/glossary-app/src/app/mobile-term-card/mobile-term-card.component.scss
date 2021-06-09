@@ -1,5 +1,5 @@
 @import '../../styles.scss';
-
+@import '~@angular/flex-layout/mq';
 
 
 .mat-card-header-text {
@@ -8,7 +8,19 @@
 
 
 .edit-btn, .delete-btn{
+
+  width: 70px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.edit-btn{
   border: 2px solid $prime-text-color;
+}
+
+.delete-btn{
+  background-color: $destructive-action-color;
+  color: white;
 }
 
 .edit-icon{
@@ -17,4 +29,15 @@
 
 .delete-icon{
   color: $destructive-action-color;
+}
+
+.edit-icon, .delete-icon{
+  transform: scale(0.5);
+  height: 35px;
+}
+
+.mat-button{
+  @include layout-bp('xs'){
+    font-size: 12px;
+  }
 }
