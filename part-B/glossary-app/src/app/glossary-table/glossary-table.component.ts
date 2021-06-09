@@ -26,6 +26,7 @@ export class GlossaryTableComponent {
   public dataSource: MatTableDataSource<GlossaryTerm>;
   private unsubscribe = new Subject();
   public allTerms: GlossaryTerm[] = [];
+  public currentPageIndex: number = 0;
 
   constructor(public dialog: MatDialog, private snackBar: MatSnackBar) {
     const localTerms = localStorage.getItem("terms");
@@ -35,14 +36,24 @@ export class GlossaryTableComponent {
     } else {
       this.allTerms = JSON.parse(localTerms).sort(this.alphebeticalComparator);
     }
-    this.dataSource = new MatTableDataSource(this.allTerms.slice(0, this.PAGE_SIZE));
+    this.dataSource = new MatTableDataSource([...this.allTerms.slice(this.currentPageIndex, this.PAGE_SIZE)]);
 
   }
 
   reRenderTable(): void {
     this.allTerms = this.allTerms.sort(this.alphebeticalComparator);
     localStorage.setItem("terms", JSON.stringify(this.allTerms));
-    this.dataSource.data = this.allTerms.slice(0, this.PAGE_SIZE);
+    this.currentPageIndex = 0;
+    this.dataSource.data = [...this.allTerms.slice(this.currentPageIndex, this.PAGE_SIZE)];
+
+    const pageEvent: PageEvent = {
+      pageIndex: 0,
+
+      pageSize: this.PAGE_SIZE,
+
+      length: this.allTerms.length
+    };
+    this.changePage(pageEvent);
   }
 
   alphebeticalComparator(a: GlossaryTerm, b: GlossaryTerm): number {
@@ -85,7 +96,7 @@ export class GlossaryTableComponent {
       if (result !== undefined) {
         const newTerm: GlossaryTerm = {
           ...result.newTerm,
-          id: this.allTerms.length,
+          id: Math.floor(Math.random() * 100000).toString(),
         };
         this.allTerms = [...this.allTerms, newTerm];
         this.reRenderTable();
@@ -128,7 +139,8 @@ export class GlossaryTableComponent {
   }
 
   changePage(event: PageEvent): void {
-    this.dataSource.data = this.allTerms.slice(event.pageIndex * this.PAGE_SIZE, event.pageIndex * this.PAGE_SIZE + this.PAGE_SIZE);
+    this.currentPageIndex = event.pageIndex;
+    this.dataSource.data = [...this.allTerms.slice(this.currentPageIndex * this.PAGE_SIZE, this.currentPageIndex * this.PAGE_SIZE + this.PAGE_SIZE)];
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 

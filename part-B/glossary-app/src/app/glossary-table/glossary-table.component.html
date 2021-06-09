@@ -48,7 +48,8 @@
       (editButtonClicked)="editTerm($event)">
     </mobile-term-card>
   </div>
-  <mat-paginator [length]="allTerms.length" [pageSize]="PAGE_SIZE" (page)="changePage($event)">
+  <mat-paginator [length]="allTerms.length" [pageIndex]="currentPageIndex" [pageSize]="PAGE_SIZE"
+    (page)="changePage($event)">
   </mat-paginator>
   <div fxLayout="row" fxLayoutAlign="center center"><span *ngIf="dataSource.data.length === 0" class="empty-msg">There
       is no
