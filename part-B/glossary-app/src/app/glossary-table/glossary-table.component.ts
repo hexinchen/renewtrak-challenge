@@ -42,10 +42,11 @@ export class GlossaryTableComponent {
   reRenderTable(): void {
     this.allTerms = this.allTerms.sort(this.alphebeticalComparator);
     localStorage.setItem("terms", JSON.stringify(this.allTerms));
+    this.dataSource.data = this.allTerms.slice(0, this.PAGE_SIZE);
   }
 
   alphebeticalComparator(a: GlossaryTerm, b: GlossaryTerm): number {
-    return a.term > b.term ? 1 : (a.term < b.term ? -1 : 0)
+    return a.term.toLowerCase() > b.term.toLowerCase() ? 1 : (a.term.toLowerCase() < b.term.toLowerCase() ? -1 : 0)
   }
 
   editTerm(selectedTerm: GlossaryTerm): void {
